@@ -10,6 +10,6 @@ git clone https://github.com/rickert157/parser_template manta && cd manta && pyt
 ### Режим отладки
 Для отладки можно парсить по одной странице, указывая параметр --test-url с url
 ```sh
-python3 __main__.py --test-url=https://manta.com
+python3 __main__.py --test-url=https://github.com
 ```
 

@@ -1,8 +1,10 @@
-from SinCity.colors import RED, RESET, GREEN, BLUE
+from SinCity.colors import RED, RESET, GREEN, BLUE, YELLOW
 from modules.config import (
         result_dir, 
         result_file_path, 
-        status_type_info
+        status_type_info,
+        status_type_warning,
+        status_type_error
         )
 import csv
 import os
@@ -31,7 +33,7 @@ def init_parser():
 
 def parse_params(params:list[str]) -> dict[str | None]:
     """Парсер параметров коммандной строки"""
-    commands = ['--test-url', '--recording']
+    commands = ['--test-url', '--parser']
     parsed_argv = {}
     
     for command in commands:
@@ -44,5 +46,5 @@ def parse_params(params:list[str]) -> dict[str | None]:
                 except IndexError:
                     print(
                             f'{log_time()} {status_type_error} '
-                            f'необходимо передать значение: {YELLOW}{param}{RESET}=<url>')
+                            f'необходимо передать значение: {YELLOW}{param}{RESET}=<value>')
     return parsed_argv

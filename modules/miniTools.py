@@ -27,3 +27,22 @@ def init_parser():
             writer = csv.writer(file)
             writer.writerow(['Company', 'Domain', 'Phone', 'Location'])
         print(f'{log_time()} {status_type_info} CREATE file:\t{result_file_path}')
+
+
+def parse_params(params:list[str]) -> dict[str | None]:
+    """Парсер параметров коммандной строки"""
+    commands = ['--test-url', '--recording']
+    parsed_argv = {}
+    
+    for command in commands:
+        for param in params:
+            if command in param:
+                try:
+                    value = param.split('=', 1)[1].strip()
+                    if command not in parsed_argv:
+                        parsed_argv[command] = value
+                except IndexError:
+                    print(
+                            f'{log_time()} {status_type_error} '
+                            f'необходимо передать значение: {YELLOW}{param}{RESET}=<url>')
+    return parsed_argv

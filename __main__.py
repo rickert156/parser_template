@@ -3,6 +3,7 @@ from SinCity.colors import RED, RESET, GREEN, BLUE, YELLOW
 from SinCity.Browser.driver_chrome import driver_chrome
 from SinCity.Agent.header import header
 from typing import Optional
+from modules.logger import log_print
 from modules.miniTools import (
         init_parser, 
         log_time, 
@@ -20,16 +21,16 @@ import time
 def parser_result(url:str, parser:Optional[str]=None) -> None:
     mode = parser if parser else 'selenium'
     
-    print(f'{log_time()} {status_type_info} Тип парсера:\t{mode}')
+    log_print(f'{log_time()} {status_type_info} Тип парсера:\t{mode}')
     
     if mode == 'requests':
         head = header()
         response = requests.get(url, headers=head)
         status_code = response.status_code
         if status_code == 200:
-            print(f'{log_time()} {status_type_info} Доступ к URL: {GREEN}OK{RESET}')
+            log_print(f'{log_time()} {status_type_info} Доступ к URL: {GREEN}OK{RESET}')
         else:
-            print(f'{log_time()} {status_type_error} Status code: {RED}{status_code}{RESET}')
+            log_print(f'{log_time()} {status_type_error} Status code: {RED}{status_code}{RESET}')
     else:
         driver = None
         try:
@@ -38,13 +39,13 @@ def parser_result(url:str, parser:Optional[str]=None) -> None:
             page_source = driver.page_source
             bs = BeautifulSoup(page_source, 'lxml')
             if 'Cloudflare' in bs.body.get_text():
-                print(f'{log_time()} {status_type_warning} Проверка Cloudflare')
+                log_print(f'{log_time()} {status_type_warning} Проверка Cloudflare')
                 driver.quit()
                 parser_result(url=url)
             else:
-                print(f'{log_time()} {status_type_info} Проверка Cloudflare не обнаружена')
+                log_print(f'{log_time()} {status_type_info} Проверка Cloudflare не обнаружена')
         except Exception as err:
-            print(f'{log_time()} {status_type_error} Error: {err}')
+            log_print(f'{log_time()} {status_type_error} Error: {err}')
         finally:
             if driver:
                 driver.quit()
@@ -73,8 +74,8 @@ if __name__ == '__main__':
             if test_url:
                 parser_result(url=test_url, parser=parser)
         if len(args) == 0:
-            print(f'{log_time()} {status_type_warning} необходимо передать параметры')
+            log_print(f'{log_time()} {status_type_warning} необходимо передать параметры')
     except KeyboardInterrupt:
         sys.exit(f'\n{log_time()} {status_type_info} Exit...')
-    #except Exception as err:
-    #    print(f'{log_time()} {status_type_warning} {err}')
+    except Exception as err:
+        log_print(f'{log_time()} {status_type_warning} {err}')

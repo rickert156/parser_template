@@ -3,3 +3,4 @@ tests/
 Result/
 **/*.py[oc]
 **/__pycache__/*
+**/*.log

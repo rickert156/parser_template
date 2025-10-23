@@ -6,6 +6,7 @@ from modules.config import (
         status_type_warning,
         status_type_error
         )
+from modules.logger import log_print
 import csv
 import os
 import sys
@@ -18,17 +19,17 @@ def log_time():
     return log
 
 def init_parser():
-    print(f'{log_time()} {status_type_info} start...{RESET}')
+    log_print(f'{log_time()} {status_type_info} start...{RESET}')
     
     if not os.path.exists(result_dir):
         os.makedirs(result_dir)
-        print(f'{log_time()} {status_type_info} CREATE dir:\t{result_dir}')
+        log_print(f'{log_time()} {status_type_info} CREATE dir:\t{result_dir}')
 
     if not os.path.exists(result_file_path):
         with open(result_file_path, 'w') as file:
             writer = csv.writer(file)
             writer.writerow(['Company', 'Domain', 'Phone', 'Location'])
-        print(f'{log_time()} {status_type_info} CREATE file:\t{result_file_path}')
+        log_print(f'{log_time()} {status_type_info} CREATE file:\t{result_file_path}')
 
 
 def parse_params(params:list[str]) -> dict[str | None]:
@@ -44,7 +45,7 @@ def parse_params(params:list[str]) -> dict[str | None]:
                     if command not in parsed_argv:
                         parsed_argv[command] = value
                 except IndexError:
-                    print(
+                    log_print(
                             f'{log_time()} {status_type_error} '
                             f'необходимо передать значение: {YELLOW}{param}{RESET}=<value>')
     return parsed_argv

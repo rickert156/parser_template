@@ -9,3 +9,4 @@ result_file_path = f'{result_dir}/{result_file}'
 #статусы
 status_type_info = f"[{GREEN}INFO{RESET}]"
 status_type_error = f"[{RED}ERROR{RESET}]"
+status_type_warning = f"[{YELLOW}WARNING{RESET}]"

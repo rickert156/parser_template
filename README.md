@@ -10,6 +10,6 @@ git clone https://github.com/rickert156/parser_template parser && cd parser && p
 ### Режим отладки
 Для отладки можно парсить по одной странице, указывая параметр --test-url с url
 ```sh
-python3 __main__.py --test-url=https://github.com
+python3 -m modules.test_requests --parser=selenium --test-url=https://github.com
 ```
 
